@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/mine_iv"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/mine_tv_date"
+        android:layout_margin="10dp"/>
+    <TextView
+        android:id="@+id/mine_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:maxEms="13"
+        android:padding="5dp"
+        android:background="@drawable/tv_shape_green"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_toLeftOf="@+id/mine_iv"
+        android:layout_alignTop="@+id/mine_iv"/>
+
+    <TextView
+        android:id="@+id/mine_tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2020年2月3日    15:15:15"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:background="#00000000"
+        android:textSize="10sp"
+        />
+
+</RelativeLayout>
