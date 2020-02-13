@@ -42,7 +42,8 @@ public class ChatModl implements SentMessageModl {
         PostMesssage mess = new PostMesssage();
         mess.setSpoken(message);
         mess.setUserid("xiaoming");
-        chatPresenter.returnMessage(new MessageBean(0,message,new MyCalendar().getTime()));
+        MyCalendar myCalendar = new MyCalendar();
+        chatPresenter.returnMessage(new MessageBean(0,message,myCalendar.getTime(),myCalendar.getDay()));
 
         final Gson gson = new Gson();
         json = gson.toJson(mess);
@@ -52,7 +53,8 @@ public class ChatModl implements SentMessageModl {
               replyJson = MyHttpHelper.sendJsonPost(json);//服务端返回信息replyJson
               replyMessage = gson.fromJson(replyJson, ReplyMessage.class);
               String mess=replyMessage.getData().getInfo().getText();
-              chatPresenter.returnMessage(new MessageBean(1,mess,new MyCalendar().getTime()));
+              MyCalendar myCalendar = new MyCalendar();
+              chatPresenter.returnMessage(new MessageBean(1,mess,myCalendar.getTime(),myCalendar.getDay()));
 
           }
       }).start();

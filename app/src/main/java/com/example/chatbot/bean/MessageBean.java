@@ -9,11 +9,13 @@ public class MessageBean {
     private int type;
     private String message;
     private String date;
+    private int day;
 
-    public MessageBean(int type, String message, String date) {
+    public MessageBean(int type, String message, String date,int day) {
         this.type = type;
         this.message = message;
         this.date = date;
+        this.day=day;
     }
 
     public int getType() {
@@ -38,5 +40,13 @@ public class MessageBean {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
     }
 }

@@ -95,7 +95,7 @@ public class MainActivity extends Activity implements View.OnClickListener ,Post
     }
 
     /**
-     * @param messageBean presenter调用，返回model数据更新ui
+     * @param messageBean presenter调用，获取model数据更新ui
      */
     @Override
     public void getMessage(MessageBean messageBean) {

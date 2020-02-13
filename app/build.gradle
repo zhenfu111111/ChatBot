@@ -29,5 +29,5 @@ dependencies {
     implementation files('libs\\gson-2.8.6.jar')
     implementation 'com.github.stephanenicolas:butterknife:10.0.0.6'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
-
+    implementation 'org.xutils:xutils:3.8.4'
 }
