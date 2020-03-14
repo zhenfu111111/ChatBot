@@ -10,7 +10,8 @@
         android:id="@+id/robot_iv"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/bh21"
+        android:scaleType="fitCenter"
         android:layout_margin="10dp"
         android:layout_below="@id/robot_tv_date"
        />
@@ -19,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxEms="13"
-        android:padding="5dp"
+        android:padding="10dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/tv_shape"
         android:textSize="14sp"

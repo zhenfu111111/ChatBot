@@ -6,14 +6,16 @@ import com.example.chatbot.bean.ReplyMessage;
 import com.example.chatbot.model.ChatModl;
 import com.example.chatbot.view.PostView;
 
+import java.net.URI;
+
 /**
  * 创建日期：20200126
  * <p>
  * 描述：presenter
  */
 public class ChatPresenter implements SentMessagePresenter {
-    ChatModl IsentMessageModl;
-    PostView postView;
+    private ChatModl IsentMessageModl;
+    private PostView postView;
 
     public ChatPresenter(PostView postView) {
         this.postView=postView;
@@ -37,4 +39,5 @@ public class ChatPresenter implements SentMessagePresenter {
         postView.getMessage(messageBean);
 
     }
+
 }

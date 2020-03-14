@@ -27,7 +27,7 @@ public class MyCalendar {
         second = calendar.get(Calendar.SECOND);
     }
 
-    public String getTime(){
+    public String getData(){
         String time=year+"年"+month+"月"+day+"日"+"   "+hour+":"+minute+":"+second;
         return time;
     }
@@ -36,5 +36,10 @@ public class MyCalendar {
 
         int days=year*10000+month*100+day;
         return days;
+    }
+
+    public int getTime(){
+        int time = hour * 100 + minute;
+        return time;
     }
 }

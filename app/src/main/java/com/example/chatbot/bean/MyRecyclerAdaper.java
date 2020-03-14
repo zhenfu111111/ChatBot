@@ -1,6 +1,10 @@
 package com.example.chatbot.bean;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.text.BoringLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.chatbot.R;
 import com.example.chatbot.view.MainActivity;
 
+import android.net.Uri;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 创建日期：20200202
@@ -23,19 +29,26 @@ import java.util.ArrayList;
 public class MyRecyclerAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int post=0;
     private static final int reply=1;//判断信息类型,0为用户输入，1为服务器返回
-    private ArrayList<MessageBean> list;
+    private List<MessageBean> list;
     private Context context;
     private LayoutInflater layoutInflater;
+    private Uri PostURI=null;
 
-    public MyRecyclerAdaper(ArrayList<MessageBean> list) {
+    public MyRecyclerAdaper(List<MessageBean> list) {
         this.list = list;
     }
 
+
+    public void setPostURI(Uri uri){
+        this.PostURI=uri;
+    }
+
+
     /**更新item
-     * @param arrayList 变化后数组
+     * @param List 变化后数组
      */
-    public void update(ArrayList<MessageBean> arrayList){
-        this.list=arrayList;
+    public void update(List<MessageBean> List){
+        this.list=List;
         notifyItemInserted(list.size()-1);
 
     }
@@ -89,17 +102,52 @@ public class MyRecyclerAdaper extends RecyclerView.Adapter<RecyclerView.ViewHold
      */
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+
         MessageBean messageBean=list.get(position);
         String mess = messageBean.getMessage();
         String date=messageBean.getDate();
+
+        //判断两条消息间隔小于10min取消显示日期消息
+        boolean removTime=false;
+        int day = messageBean.getDay();
+        int time = messageBean.getTime();
+        if (position>=1){
+            MessageBean messageBean_last = list.get(position - 1);
+            int day1 = messageBean_last.getDay();
+            int time1 = messageBean_last.getTime();
+            if (day==day1&&((time-time1)<10)){
+                removTime=true;
+            }
+
+        }
+
         if (holder instanceof MyRecyclerAdaper.postViewHolder){
             ((MyRecyclerAdaper.postViewHolder) holder).textView.setText(mess);
-            ((MyRecyclerAdaper.postViewHolder) holder).date.setText(date);
+            if (removTime){
+                ((MyRecyclerAdaper.postViewHolder) holder).date.setText("");
+            }else {
+                ((MyRecyclerAdaper.postViewHolder) holder).date.setText(date);
+            }
+
+            if (PostURI!=null){
+                ((postViewHolder) holder).imageView.setImageURI(PostURI);
+            }
+
         }
 
         if (holder instanceof MyRecyclerAdaper.replyViewHolder){
             ((MyRecyclerAdaper.replyViewHolder) holder).textView.setText(mess);
-            ((MyRecyclerAdaper.replyViewHolder) holder).date.setText(date);
+
+            if (removTime){
+                ((MyRecyclerAdaper.replyViewHolder) holder).date.setText("");
+            }else {
+                ((MyRecyclerAdaper.replyViewHolder) holder).date.setText(date);
+            }
+
+           /* Resources resources = context.getResources();
+            Drawable drawable = resources.getDrawable(R.drawable.bh16);
+            ((replyViewHolder) holder).imageView.setBackground(drawable);*/
+
         }
 
     }
@@ -110,10 +158,10 @@ public class MyRecyclerAdaper extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     class postViewHolder extends RecyclerView.ViewHolder{
-        public ImageView imageView;
-        public TextView textView;
-        public TextView date;
-        public postViewHolder(@NonNull View itemView) {
+        private ImageView imageView;
+        private TextView textView;
+        private TextView date;
+        private postViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView=itemView.findViewById(R.id.mine_iv);
             textView=itemView.findViewById(R.id.mine_tv);
@@ -122,10 +170,10 @@ public class MyRecyclerAdaper extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     class replyViewHolder extends RecyclerView.ViewHolder{
-        public ImageView imageView;
-        public TextView textView;
-        public TextView date;
-        public replyViewHolder(@NonNull View itemView) {
+        private ImageView imageView;
+        private TextView textView;
+        private TextView date;
+        private replyViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView=itemView.findViewById(R.id.robot_iv);
             textView=itemView.findViewById(R.id.robot_tv);

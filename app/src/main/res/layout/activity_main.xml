@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/myRL"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -23,17 +24,19 @@
            android:layout_width="wrap_content"
            android:layout_height="match_parent"
            android:gravity="center"
-           android:text="用户名"
+           android:text="人工智障"
            android:textSize="16sp"
            android:layout_toRightOf="@+id/fanhui"/>
 
        <TextView
-           android:layout_width="wrap_content"
+           android:id="@+id/menu"
+           android:layout_width="50dp"
            android:layout_height="wrap_content"
            android:text="..."
+           android:gravity="right"
            android:layout_alignParentRight="true"
            android:textSize="20sp"
-          android:layout_alignParentTop="true"
+           android:layout_alignParentTop="true"
            android:layout_marginRight="10dp"/>
    </RelativeLayout>
 

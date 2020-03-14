@@ -1,5 +1,7 @@
 package com.example.chatbot.model;
 
+import java.net.URI;
+
 /**
  * 创建日期：20200126
  * <p>
