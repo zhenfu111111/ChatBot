@@ -104,7 +104,7 @@ public class MainActivity extends Activity implements View.OnClickListener ,Post
         if (myList == null) {
             myList = new ArrayList<>();//首次打开无记录调用此句,防空指针
         }
-        mAdaper = new MyRecyclerAdaper(myList);
+        mAdaper = new MyRecyclerAdaper(myList,mDB);
         String myUri = preferences.getString("myUri", "");//设置头像
         if (myUri!=""){
 
@@ -199,7 +199,7 @@ public class MainActivity extends Activity implements View.OnClickListener ,Post
             Bundle bundle = data.getExtras();
             int days = bundle.getInt("days");
             myList = mDB.selectByDay(days);//载入查询记录
-            mAdaper=new MyRecyclerAdaper(myList);
+            mAdaper=new MyRecyclerAdaper(myList,mDB);
             rv.setAdapter(mAdaper);
             rv.scrollToPosition(0);
         }
@@ -247,7 +247,7 @@ public class MainActivity extends Activity implements View.OnClickListener ,Post
                         myList=new ArrayList<>();
                         Toast.makeText(MainActivity.this,"聊天记录为空",Toast.LENGTH_LONG).show();
                     }
-                    mAdaper=new MyRecyclerAdaper(myList);
+                    mAdaper=new MyRecyclerAdaper(myList,mDB);
                     rv.setAdapter(mAdaper);
                     rv.scrollToPosition(myList.size()-1);
                 }else if (item.getItemId()==R.id.changeMyIV){//更换头像
@@ -257,7 +257,7 @@ public class MainActivity extends Activity implements View.OnClickListener ,Post
                 }else if (item.getItemId()==R.id.delete){
                     mDB.deleteAll();
                     myList=new ArrayList<>();
-                    mAdaper=new MyRecyclerAdaper(myList);
+                    mAdaper=new MyRecyclerAdaper(myList,mDB);
                     rv.setAdapter(mAdaper);
                 }
                 return false;

@@ -1,24 +1,20 @@
 package com.example.chatbot.bean;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.text.BoringLayout;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.chatbot.R;
-import com.example.chatbot.view.MainActivity;
 
 import android.net.Uri;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,14 +29,23 @@ public class MyRecyclerAdaper extends RecyclerView.Adapter<RecyclerView.ViewHold
     private Context context;
     private LayoutInflater layoutInflater;
     private Uri PostURI=null;
+    private DbBean mDB;
 
-    public MyRecyclerAdaper(List<MessageBean> list) {
+    public MyRecyclerAdaper(List<MessageBean> list,DbBean mDB) {
         this.list = list;
+        this.mDB=mDB;
     }
 
 
     public void setPostURI(Uri uri){
         this.PostURI=uri;
+    }
+
+    private void removeItem(int position){//移除某一项
+        notifyItemRemoved(position);
+        mDB.deleteById(list.get(position).getId());
+        list=mDB.selectAll();
+
     }
 
 
@@ -101,7 +106,7 @@ public class MyRecyclerAdaper extends RecyclerView.Adapter<RecyclerView.ViewHold
      * @param position
      */
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
 
         MessageBean messageBean=list.get(position);
         String mess = messageBean.getMessage();
@@ -123,6 +128,13 @@ public class MyRecyclerAdaper extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         if (holder instanceof MyRecyclerAdaper.postViewHolder){
             ((MyRecyclerAdaper.postViewHolder) holder).textView.setText(mess);
+            ((MyRecyclerAdaper.postViewHolder) holder).textView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    showPopupMenu(v,position);
+                    return false;
+                }
+            });
             if (removTime){
                 ((MyRecyclerAdaper.postViewHolder) holder).date.setText("");
             }else {
@@ -137,6 +149,13 @@ public class MyRecyclerAdaper extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         if (holder instanceof MyRecyclerAdaper.replyViewHolder){
             ((MyRecyclerAdaper.replyViewHolder) holder).textView.setText(mess);
+            ((MyRecyclerAdaper.replyViewHolder) holder).textView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    showPopupMenu(v,position);
+                    return false;
+                }
+            });
 
             if (removTime){
                 ((MyRecyclerAdaper.replyViewHolder) holder).date.setText("");
@@ -179,6 +198,24 @@ public class MyRecyclerAdaper extends RecyclerView.Adapter<RecyclerView.ViewHold
             textView=itemView.findViewById(R.id.robot_tv);
             date=itemView.findViewById(R.id.robot_tv_date);
         }
+    }
+
+    private void showPopupMenu(View view,final int position){//设置item弹出菜单
+        // View当前PopupMenu显示的相对View的位置
+        PopupMenu popupMenu = new PopupMenu(context, view);
+        // menu布局
+        popupMenu.getMenuInflater().inflate(R.menu.item_click_menu,popupMenu.getMenu());
+        // menu的item点击事件
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId()==R.id.delete_item){
+                    removeItem(position);
+                }
+                return false;
+            }
+        });
+        popupMenu.show();
     }
 
 }
