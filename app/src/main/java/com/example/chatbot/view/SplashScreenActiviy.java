@@ -41,10 +41,6 @@ public class SplashScreenActiviy extends Activity {
 
     }
     class MyCountDownTimer extends CountDownTimer {
-        //millisInFuture:倒计时的总数,单位毫秒
-        //例如 millisInFuture=1000;表示1秒
-        //countDownInterval:表示间隔多少毫秒,调用一次onTick方法()
-        //例如: countDownInterval =1000;表示每1000毫秒调用一次onTick()
         public MyCountDownTimer(long millisInFuture, long countDownInterval) {
             super(millisInFuture, countDownInterval);
         }
